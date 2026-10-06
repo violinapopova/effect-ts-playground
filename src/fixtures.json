@@ -1,0 +1,552 @@
+{
+  "recordedAt": "2026-10-05T19:23:09.215Z",
+  "geocode": {
+    "be": {
+      "results": [
+        {
+          "name": "Be",
+          "country": "India",
+          "admin1": "Sikkim",
+          "latitude": 27.58333,
+          "longitude": 88.45
+        }
+      ]
+    },
+    "ber": {
+      "results": [
+        {
+          "name": "Berlin",
+          "country": "Germany",
+          "admin1": "State of Berlin",
+          "latitude": 52.52437,
+          "longitude": 13.41053
+        }
+      ]
+    },
+    "berl": {
+      "results": [
+        {
+          "name": "Berlin",
+          "country": "Germany",
+          "admin1": "State of Berlin",
+          "latitude": 52.52437,
+          "longitude": 13.41053
+        }
+      ]
+    },
+    "berli": {
+      "results": [
+        {
+          "name": "Berlin",
+          "country": "Germany",
+          "admin1": "State of Berlin",
+          "latitude": 52.52437,
+          "longitude": 13.41053
+        }
+      ]
+    },
+    "berlin": {
+      "results": [
+        {
+          "name": "Berlin",
+          "country": "Germany",
+          "admin1": "State of Berlin",
+          "latitude": 52.52437,
+          "longitude": 13.41053
+        }
+      ]
+    },
+    "bern": {
+      "results": [
+        {
+          "name": "Bern",
+          "country": "Switzerland",
+          "admin1": "Canton of Bern",
+          "latitude": 46.94809,
+          "longitude": 7.44744
+        }
+      ]
+    },
+    "pa": {
+      "results": [
+        {
+          "name": "Pa",
+          "country": "Burkina Faso",
+          "admin1": "Boucle du Mouhoun",
+          "latitude": 12.66667,
+          "longitude": -3.95
+        }
+      ]
+    },
+    "par": {
+      "results": [
+        {
+          "name": "Paris",
+          "country": "France",
+          "admin1": "Île-de-France Region",
+          "latitude": 48.85341,
+          "longitude": 2.3488
+        }
+      ]
+    },
+    "pari": {
+      "results": [
+        {
+          "name": "Paris",
+          "country": "France",
+          "admin1": "Île-de-France Region",
+          "latitude": 48.85341,
+          "longitude": 2.3488
+        }
+      ]
+    },
+    "paris": {
+      "results": [
+        {
+          "name": "Paris",
+          "country": "France",
+          "admin1": "Île-de-France Region",
+          "latitude": 48.85341,
+          "longitude": 2.3488
+        }
+      ]
+    },
+    "lo": {
+      "results": [
+        {
+          "name": "Lo",
+          "country": "Belgium",
+          "admin1": "Flanders",
+          "latitude": 50.98036,
+          "longitude": 2.74965
+        }
+      ]
+    },
+    "lon": {
+      "results": [
+        {
+          "name": "London",
+          "country": "United Kingdom",
+          "admin1": "England",
+          "latitude": 51.50853,
+          "longitude": -0.12574
+        }
+      ]
+    },
+    "lond": {
+      "results": [
+        {
+          "name": "London",
+          "country": "United Kingdom",
+          "admin1": "England",
+          "latitude": 51.50853,
+          "longitude": -0.12574
+        }
+      ]
+    },
+    "londo": {
+      "results": [
+        {
+          "name": "London",
+          "country": "United Kingdom",
+          "admin1": "England",
+          "latitude": 51.50853,
+          "longitude": -0.12574
+        }
+      ]
+    },
+    "london": {
+      "results": [
+        {
+          "name": "London",
+          "country": "United Kingdom",
+          "admin1": "England",
+          "latitude": 51.50853,
+          "longitude": -0.12574
+        }
+      ]
+    },
+    "zu": {
+      "results": [
+        {
+          "name": "Zù",
+          "country": "Italy",
+          "admin1": "Lombardy",
+          "latitude": 45.76082,
+          "longitude": 10.03721
+        }
+      ]
+    },
+    "zur": {
+      "results": [
+        {
+          "name": "Zurich",
+          "country": "Switzerland",
+          "admin1": "Canton of Zurich",
+          "latitude": 47.36667,
+          "longitude": 8.55
+        }
+      ]
+    },
+    "zuri": {
+      "results": [
+        {
+          "name": "Zurich",
+          "country": "Switzerland",
+          "admin1": "Canton of Zurich",
+          "latitude": 47.36667,
+          "longitude": 8.55
+        }
+      ]
+    },
+    "zuric": {
+      "results": [
+        {
+          "name": "Zurich",
+          "country": "Switzerland",
+          "admin1": "Canton of Zurich",
+          "latitude": 47.36667,
+          "longitude": 8.55
+        }
+      ]
+    },
+    "zurich": {
+      "results": [
+        {
+          "name": "Zurich",
+          "country": "Switzerland",
+          "admin1": "Canton of Zurich",
+          "latitude": 47.36667,
+          "longitude": 8.55
+        }
+      ]
+    },
+    "ro": {
+      "results": [
+        {
+          "name": "Ro",
+          "country": "Italy",
+          "admin1": "Emilia-Romagna",
+          "latitude": 44.94695,
+          "longitude": 11.76006
+        }
+      ]
+    },
+    "rom": {
+      "results": [
+        {
+          "name": "Rome",
+          "country": "Italy",
+          "admin1": "Lazio",
+          "latitude": 41.89193,
+          "longitude": 12.51133
+        }
+      ]
+    },
+    "rome": {
+      "results": [
+        {
+          "name": "Rome",
+          "country": "Italy",
+          "admin1": "Lazio",
+          "latitude": 41.89193,
+          "longitude": 12.51133
+        }
+      ]
+    },
+    "vi": {
+      "results": [
+        {
+          "name": "Vi",
+          "country": "Sweden",
+          "admin1": "Västernorrland County",
+          "latitude": 62.43333,
+          "longitude": 17.41667
+        }
+      ]
+    },
+    "vie": {
+      "results": [
+        {
+          "name": "Vienna",
+          "country": "Austria",
+          "admin1": "State of Vienna",
+          "latitude": 48.20849,
+          "longitude": 16.37208
+        }
+      ]
+    },
+    "vien": {
+      "results": [
+        {
+          "name": "Vienna",
+          "country": "Austria",
+          "admin1": "State of Vienna",
+          "latitude": 48.20849,
+          "longitude": 16.37208
+        }
+      ]
+    },
+    "vienn": {
+      "results": [
+        {
+          "name": "Vienna",
+          "country": "Austria",
+          "admin1": "State of Vienna",
+          "latitude": 48.20849,
+          "longitude": 16.37208
+        }
+      ]
+    },
+    "vienna": {
+      "results": [
+        {
+          "name": "Vienna",
+          "country": "Austria",
+          "admin1": "State of Vienna",
+          "latitude": 48.20849,
+          "longitude": 16.37208
+        }
+      ]
+    },
+    "ma": {
+      "results": [
+        {
+          "name": "Wiang Pa Pao",
+          "country": "Thailand",
+          "admin1": "Chiang Rai",
+          "latitude": 19.34778,
+          "longitude": 99.50722
+        }
+      ]
+    },
+    "mad": {
+      "results": [
+        {
+          "name": "Madrid",
+          "country": "Spain",
+          "admin1": "Madrid",
+          "latitude": 40.4165,
+          "longitude": -3.70256
+        }
+      ]
+    },
+    "madr": {
+      "results": [
+        {
+          "name": "Madrid",
+          "country": "Spain",
+          "admin1": "Madrid",
+          "latitude": 40.4165,
+          "longitude": -3.70256
+        }
+      ]
+    },
+    "madri": {
+      "results": [
+        {
+          "name": "Madrid",
+          "country": "Spain",
+          "admin1": "Madrid",
+          "latitude": 40.4165,
+          "longitude": -3.70256
+        }
+      ]
+    },
+    "madrid": {
+      "results": [
+        {
+          "name": "Madrid",
+          "country": "Spain",
+          "admin1": "Madrid",
+          "latitude": 40.4165,
+          "longitude": -3.70256
+        }
+      ]
+    }
+  },
+  "forecast": {
+    "27.58333,88.45": {
+      "current": {
+        "temperature_2m": 11.8,
+        "weather_code": 3
+      }
+    },
+    "52.52437,13.41053": {
+      "current": {
+        "temperature_2m": 16.9,
+        "weather_code": 3
+      }
+    },
+    "46.94809,7.44744": {
+      "current": {
+        "temperature_2m": 13.2,
+        "weather_code": 0
+      }
+    },
+    "12.66667,-3.95": {
+      "current": {
+        "temperature_2m": 24.3,
+        "weather_code": 3
+      }
+    },
+    "48.85341,2.3488": {
+      "current": {
+        "temperature_2m": 20.4,
+        "weather_code": 0
+      }
+    },
+    "50.98036,2.74965": {
+      "current": {
+        "temperature_2m": 14.3,
+        "weather_code": 2
+      }
+    },
+    "51.50853,-0.12574": {
+      "current": {
+        "temperature_2m": 19.9,
+        "weather_code": 1
+      }
+    },
+    "45.76082,10.03721": {
+      "current": {
+        "temperature_2m": 17.7,
+        "weather_code": 1
+      }
+    },
+    "47.36667,8.55": {
+      "current": {
+        "temperature_2m": 16.9,
+        "weather_code": 0
+      }
+    },
+    "44.94695,11.76006": {
+      "current": {
+        "temperature_2m": 18.8,
+        "weather_code": 3
+      }
+    },
+    "41.89193,12.51133": {
+      "current": {
+        "temperature_2m": 21.2,
+        "weather_code": 3
+      }
+    },
+    "62.43333,17.41667": {
+      "current": {
+        "temperature_2m": 14.3,
+        "weather_code": 3
+      }
+    },
+    "48.20849,16.37208": {
+      "current": {
+        "temperature_2m": 18.8,
+        "weather_code": 0
+      }
+    },
+    "19.34778,99.50722": {
+      "current": {
+        "temperature_2m": 20.9,
+        "weather_code": 1
+      }
+    },
+    "40.4165,-3.70256": {
+      "current": {
+        "temperature_2m": 20.9,
+        "weather_code": 3
+      }
+    }
+  },
+  "air": {
+    "27.58333,88.45": {
+      "current": {
+        "european_aqi": 27,
+        "pm2_5": 8.5
+      }
+    },
+    "52.52437,13.41053": {
+      "current": {
+        "european_aqi": 44,
+        "pm2_5": 11
+      }
+    },
+    "46.94809,7.44744": {
+      "current": {
+        "european_aqi": 30,
+        "pm2_5": 9.8
+      }
+    },
+    "12.66667,-3.95": {
+      "current": {
+        "european_aqi": 36,
+        "pm2_5": 12.9
+      }
+    },
+    "48.85341,2.3488": {
+      "current": {
+        "european_aqi": 62,
+        "pm2_5": 17.5
+      }
+    },
+    "50.98036,2.74965": {
+      "current": {
+        "european_aqi": 26,
+        "pm2_5": 7.9
+      }
+    },
+    "51.50853,-0.12574": {
+      "current": {
+        "european_aqi": 48,
+        "pm2_5": 6
+      }
+    },
+    "45.76082,10.03721": {
+      "current": {
+        "european_aqi": 42,
+        "pm2_5": 18.5
+      }
+    },
+    "47.36667,8.55": {
+      "current": {
+        "european_aqi": 32,
+        "pm2_5": 10.5
+      }
+    },
+    "44.94695,11.76006": {
+      "current": {
+        "european_aqi": 42,
+        "pm2_5": 17.8
+      }
+    },
+    "41.89193,12.51133": {
+      "current": {
+        "european_aqi": 49,
+        "pm2_5": 14.3
+      }
+    },
+    "62.43333,17.41667": {
+      "current": {
+        "european_aqi": 18,
+        "pm2_5": 1.2
+      }
+    },
+    "48.20849,16.37208": {
+      "current": {
+        "european_aqi": 51,
+        "pm2_5": 28.9
+      }
+    },
+    "19.34778,99.50722": {
+      "current": {
+        "european_aqi": 19,
+        "pm2_5": 3.5
+      }
+    },
+    "40.4165,-3.70256": {
+      "current": {
+        "european_aqi": 50,
+        "pm2_5": 15.7
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-navy: #1b3a4b;
+  --color-coral: #e15a4a;
+  --color-cream: #fbf6f1;
+  --color-teal: #2a9d8f;
+  --color-ink: color-mix(in srgb, #1b3a4b 45%, black);
+  --color-ink-deep: color-mix(in srgb, #1b3a4b 25%, black);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+
+  --animate-drift: drift 18s ease-in-out infinite alternate;
+  --animate-shake: shake 0.45s ease;
+  --animate-pulse-ring: pulse-ring 1s ease-in-out infinite;
+  --animate-breathe: breathe 1.2s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-stripes: stripes 0.6s linear infinite;
+  --animate-enter: enter 0.25s ease;
+  --animate-toast: toast-in 0.25s ease;
+}
+
+@keyframes drift {
+  to {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-teal) 70%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stripes {
+  to {
+    background-position: 22px 0;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@layer base {
+  html {
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--color-cream);
+    background:
+      radial-gradient(ellipse at 50% -20%, color-mix(in srgb, var(--color-navy) 90%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-deep) 100%);
+    background-attachment: fixed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
