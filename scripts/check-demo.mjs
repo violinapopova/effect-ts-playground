@@ -4,18 +4,21 @@
 //
 //   npm run check-demo
 //
-// Starts its own dev server and a headless Chrome. Set CHROME_PATH if Chrome is not in the
-// usual place. The Search race checks whichever useCity block is live in src/App.tsx.
+// Starts two dev servers and a headless Chrome. The second server serves src/App.tsx with the
+// live code swap already done, so both states of the Search race are checked without touching
+// the file. Set CHROME_PATH if Chrome is not in the usual place.
 
-import { spawn } from 'node:child_process'
-import { existsSync } from 'node:fs'
+import { spawn, spawnSync } from 'node:child_process'
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
+import { swapLiveCode } from './swap-live-code.mjs'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
+const APP = join(ROOT, 'src', 'App.tsx')
 
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -71,10 +74,15 @@ async function openPage(endpoint) {
   })
   let nextId = 1
   const pending = new Map()
+  const listeners = new Map()
   ws.addEventListener('message', (event) => {
     const message = JSON.parse(event.data)
-    pending.get(message.id)?.(message)
-    pending.delete(message.id)
+    if (message.id) {
+      pending.get(message.id)?.(message)
+      pending.delete(message.id)
+    } else {
+      listeners.get(message.method)?.(message.params)
+    }
   })
   const send = (method, params = {}) =>
     new Promise((resolve) => {
@@ -87,7 +95,49 @@ async function openPage(endpoint) {
     if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description ?? 'evaluate failed')
     return result.result.value
   }
-  return { send, evaluate, close: () => ws.close() }
+  /** Calls `handler` for each CDP event named `method`; returns a function that stops listening. */
+  const on = (method, handler) => {
+    listeners.set(method, handler)
+    return () => listeners.delete(method)
+  }
+  return { send, evaluate, on, close: () => ws.close() }
+}
+
+// --- Dev servers ------------------------------------------------------------------------
+
+/** Serves src/App.tsx with the live code swap done, as if the presenter had just swapped it. */
+const swappedAppPlugin = {
+  name: 'check-demo:swapped-app',
+  enforce: 'pre',
+  transform(code, id) {
+    if (id.split('?')[0] === APP) return swapLiveCode(code)
+  },
+}
+
+async function startServer(port, extra = {}) {
+  const server = await createServer({ root: ROOT, logLevel: 'error', server: { port }, ...extra })
+  await server.listen()
+  return { url: server.resolvedUrls.local[0], close: () => server.close() }
+}
+
+/** Typechecks the swapped App.tsx in a throwaway copy of src. Returns tsc's output, or null if clean. */
+function typecheckSwapped() {
+  const dir = mkdtempSync(join(tmpdir(), 'check-demo-swap-'))
+  try {
+    cpSync(join(ROOT, 'src'), join(dir, 'src'), { recursive: true })
+    writeFileSync(join(dir, 'src', 'App.tsx'), swapLiveCode(readFileSync(APP, 'utf8')))
+    symlinkSync(join(ROOT, 'node_modules'), join(dir, 'node_modules'), 'junction')
+    const tsconfig = {
+      extends: join(ROOT, 'tsconfig.json'),
+      compilerOptions: { paths: { '@/*': ['./src/*'] } },
+      include: ['src'],
+    }
+    writeFileSync(join(dir, 'tsconfig.json'), JSON.stringify(tsconfig))
+    const tsc = spawnSync(join(ROOT, 'node_modules', '.bin', 'tsc'), ['--noEmit', '-p', dir], { encoding: 'utf8' })
+    return tsc.status === 0 ? null : (tsc.stdout + tsc.stderr).trim()
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
 }
 
 // --- Page helpers -----------------------------------------------------------------------
@@ -155,7 +205,30 @@ function check(name, ok, detail) {
   console.log(`${ok ? '✓' : '✗'} ${name}\n    ${detail}`)
 }
 
-async function searchRace(page, url) {
+/** The page must not need the internet: conference wifi is exactly what the demo warns about. */
+async function pageLoadsOffline(page, url) {
+  const external = new Set()
+  await page.send('Network.enable')
+  const stop = page.on('Network.requestWillBeSent', ({ request }) => {
+    const { protocol, hostname } = new URL(request.url)
+    if (protocol.startsWith('http') && hostname !== 'localhost' && hostname !== '127.0.0.1') external.add(request.url)
+  })
+  await load(page, url, 'search')
+  const fontLoaded = await page.evaluate(
+    `document.fonts.ready.then(() => [...document.fonts].some((f) => f.family.includes('Inter Variable') && f.status === 'loaded'))`,
+  )
+  stop()
+  await page.send('Network.disable')
+  check(
+    'Page · loads nothing from the internet',
+    external.size === 0,
+    external.size === 0 ? 'every request went to localhost' : `external requests: ${[...external].join(', ')}`,
+  )
+  check('Page · Inter font loaded from the bundle', fontLoaded, `Inter Variable loaded: ${fontLoaded}`)
+}
+
+/** Checks the Search race against whichever useCity block `url` serves. */
+async function searchRace(page, url, where) {
   await load(page, url, 'search')
   const live = await cardTitle(page)
   await berThenBern(page)
@@ -165,18 +238,15 @@ async function searchRace(page, url) {
   const interrupted = /geocode ber[\s\S]*?interrupted/.test(await text(page))
   const detail = `stale ribbon: ${stale}, Forecast for: "${forecastFor}", geocode ber interrupted: ${interrupted}`
   if (live === 'useEffect')
-    check(
-      'Search race · useEffect block (live in App.tsx) shows the bug',
-      stale && forecastFor === 'Berlin, Germany',
-      detail,
-    )
+    check(`Search race · useEffect block (${where}) shows the bug`, stale && forecastFor === 'Berlin, Germany', detail)
   else if (live === 'Effect')
     check(
-      'Search race · Effect block (live in App.tsx) fixes it',
+      `Search race · Effect block (${where}) fixes it`,
       !stale && forecastFor?.startsWith('Bern,') && interrupted,
       detail,
     )
-  else check('Search race · live block', false, `unexpected card title "${live}"`)
+  else check(`Search race · ${where}`, false, `unexpected card title "${live}"`)
+  return live
 }
 
 async function searchRaceAtom(page, url) {
@@ -250,27 +320,44 @@ async function stayOnTheScreen(page, url) {
 
 // --- Run --------------------------------------------------------------------------------
 
-const server = await createServer({ root: ROOT, logLevel: 'error', server: { port: 5199 } })
-await server.listen()
-const url = server.resolvedUrls.local[0]
+const typeErrors = typecheckSwapped()
+check(
+  'Search race · the swapped App.tsx typechecks',
+  typeErrors === null,
+  typeErrors ?? 'tsc found no errors after the swap',
+)
+
+const asIs = await startServer(5199)
+// Its own cache dir, so the two servers do not pre-bundle into the same folder at once.
+const swapped = await startServer(5198, {
+  plugins: [swappedAppPlugin],
+  cacheDir: join(ROOT, 'node_modules', '.vite-check-demo-swapped'),
+})
 const chrome = await startChrome()
 
 try {
   const page = await openPage(chrome.endpoint)
   await page.send('Page.enable')
-  console.log(`Checking ${url} in Offline mode…\n`)
+  console.log(`\nChecking ${asIs.url} (App.tsx as it is) and ${swapped.url} (swapped), in Offline mode…\n`)
 
-  await searchRace(page, url)
-  await searchRaceAtom(page, url)
-  for (const impl of ['useEffect', 'Effect']) await airQuality(page, url, impl)
-  for (const impl of ['useEffect', 'Effect']) await flakyServer(page, url, impl)
-  for (const impl of ['useEffect', 'Effect']) await leaveTheScreen(page, url, impl)
-  await stayOnTheScreen(page, url)
+  await pageLoadsOffline(page, asIs.url)
+  const liveNow = await searchRace(page, asIs.url, 'live in App.tsx now')
+  const liveAfterSwap = await searchRace(page, swapped.url, 'live after the swap')
+  check(
+    'Search race · the swap switches implementation',
+    liveNow !== liveAfterSwap,
+    `live now: ${liveNow}, after the swap: ${liveAfterSwap}`,
+  )
+  await searchRaceAtom(page, asIs.url)
+  for (const impl of ['useEffect', 'Effect']) await airQuality(page, asIs.url, impl)
+  for (const impl of ['useEffect', 'Effect']) await flakyServer(page, asIs.url, impl)
+  for (const impl of ['useEffect', 'Effect']) await leaveTheScreen(page, asIs.url, impl)
+  await stayOnTheScreen(page, asIs.url)
 
   page.close()
 } finally {
   await chrome.stop()
-  await server.close()
+  await Promise.all([asIs.close(), swapped.close()])
 }
 
 const failed = results.filter((ok) => !ok).length
