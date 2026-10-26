@@ -8,7 +8,7 @@
   --color-ink: color-mix(in srgb, #1b3a4b 45%, black);
   --color-ink-deep: color-mix(in srgb, #1b3a4b 25%, black);
 
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
 
   --animate-drift: drift 18s ease-in-out infinite alternate;
