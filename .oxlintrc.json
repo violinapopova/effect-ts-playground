@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // Oxlint instead of ESLint: typescript-eslint needs TypeScript's JS API, which TypeScript 7 no longer ships.
+  "plugins": ["typescript", "react", "import", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react/exhaustive-effect-dependencies": "error",
+    "react/react-in-jsx-scope": "off",
+    "import/no-cycle": "error",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }]
+  },
+  "overrides": [
+    {
+      // The demo hooks: the code the talk shows on stage. They reset state from an effect when
+      // the search is cleared, the everyday pattern the talk is about, so the rule stays off here.
+      "files": [
+        "src/App.tsx",
+        "src/scenarios/*/AirQuality.tsx",
+        "src/scenarios/*/FlakyRetry.tsx",
+        "src/scenarios/*/DetailView.tsx"
+      ],
+      "rules": {
+        "react/set-state-in-effect": "off"
+      }
+    },
+    {
+      // useAirState's setters never change, but the rule cannot see through the custom hook.
+      // Listing them would bury `[name, track]` on the slide.
+      "files": ["src/scenarios/AirQuality/AirQuality.tsx"],
+      "rules": {
+        "react-hooks/exhaustive-deps": "off",
+        "react/exhaustive-effect-dependencies": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["dist"]
+}

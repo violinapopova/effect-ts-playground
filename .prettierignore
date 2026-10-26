@@ -1,0 +1,11 @@
+dist
+package-lock.json
+# Written by `npm run record`.
+src/api/fixtures.json
+
+# The code the talk shows on stage. Its line breaks are laid out for the slides.
+src/App.tsx
+src/scenarios/AirQuality/AirQuality.tsx
+src/scenarios/FlakyRetry/FlakyRetry.tsx
+src/scenarios/DetailView/DetailView.tsx
+src/scenarios/SearchRace/atomCity.ts
